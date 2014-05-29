@@ -9,10 +9,14 @@ float degMax = 250;
 
 NoiseField nF;
 
+boolean nFVisible = false;
+
 void setup() {
-  size(600, 600);
+  size(1000, 1000);
   smooth();
   noStroke();
+  
+  println(nFVisible);
 
 
   nF = new NoiseField();
@@ -29,9 +33,9 @@ void setup() {
   control.begin(10, 10);
   control.addSlider("degrees_min", 0, 100).setLabel("degrees min").setMin(0).setMax(360).setValue(degMin).linebreak();
   control.addSlider("degrees_max", 0, 100).setLabel("degrees max").setMin(0).setMax(360).setValue(degMax).linebreak();
-  control.addSlider("noise_x", 0, 100).setLabel("noise x").setMin(-1.0).setMax(1).setValue(nF.direction.x).linebreak();
-  control.addSlider("noise_y", 0, 100).setLabel("noise y").setMin(-1.0).setMax(1).setValue(nF.direction.y).linebreak();
-  control.addSlider("noise_z", 0, 100).setLabel("noise z").setMin(-1.0).setMax(1).setValue(nF.direction.z).linebreak();
+  control.addSlider("noise_x", 0, 100).setLabel("noise x").setMin(-0.1).setMax(0.1).setValue(nF.direction.x).linebreak();
+  control.addSlider("noise_y", 0, 100).setLabel("noise y").setMin(-0.1).setMax(0.1).setValue(nF.direction.y).linebreak();
+  control.addSlider("noise_z", 0, 100).setLabel("noise z").setMin(-0.1).setMax(0.1).setValue(nF.direction.z).linebreak();
   control.end();
   control.setBroadcast(true);
 }
@@ -45,9 +49,15 @@ public void degrees_max(int v) {
   if (v != 0) degMax = v; 
   resetBlobs();
 }
-public void noise_x(float v){ nF.direction.x = v; }
-public void noise_y(float v){ nF.direction.y = v; }
-public void noise_z(float v){ nF.direction.z = v; }
+public void noise_x(float v) { 
+  nF.direction.x = v;
+}
+public void noise_y(float v) { 
+  nF.direction.y = v;
+}
+public void noise_z(float v) { 
+  nF.direction.z = v;
+}
 
 
 
@@ -58,11 +68,14 @@ void resetBlobs() {
 }
 
 void draw() {
-  background(255);
+  background(100);
 
   nF.update();
 
-  nF.draw();
+//println(nFVisible);
+
+  if (nFVisible)
+    nF.draw();
 
   //stroke(0);
   fill(255);
