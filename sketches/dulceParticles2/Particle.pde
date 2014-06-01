@@ -1,12 +1,23 @@
 class Particle {
   //float x, y;
+  int size = 2;
   PVector position;
 
   Particle() {
     position = new PVector(random(width), random(height));
   }
 
+  void reset() {
+    position = new PVector(random(width), random(height));
+    size = 2;
+  }
   void draw() {
+
+    ellipse(position.x, position.y, size, size);
+  } 
+
+  void move(PVector pos) {
+    position.add(pos);
     while (position.x < 0) {
       position.x+=width;
     }
@@ -19,11 +30,6 @@ class Particle {
     while (position.y > height - 1) {
       position.y-=height;
     }
-    ellipse(position.x, position.y, 10, 10);
-  } 
-
-  void move(PVector pos) {
-    position.add(pos);
   }
 }
 
