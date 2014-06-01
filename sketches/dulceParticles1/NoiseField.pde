@@ -10,7 +10,7 @@ class NoiseField {
     position.add(direction);
   }
 
-  void draw() {
+  void drawField() {
     for (int x = 0; x < width; x += 10) {
       for (int y = 0; y < height; y += 10) {
         float value = nF.getValue(x, y) * 255;//noise(noiseSeedX+x, noiseSeedY+y) * 255;// + noiseSeed, y + noiseSeed);

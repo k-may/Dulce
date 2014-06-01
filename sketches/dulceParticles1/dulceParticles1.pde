@@ -15,7 +15,7 @@ void setup() {
   size(1000, 1000);
   smooth();
   noStroke();
-  
+
   println(nFVisible);
 
 
@@ -36,6 +36,7 @@ void setup() {
   control.addSlider("noise_x", 0, 100).setLabel("noise x").setMin(-0.1).setMax(0.1).setValue(nF.direction.x).linebreak();
   control.addSlider("noise_y", 0, 100).setLabel("noise y").setMin(-0.1).setMax(0.1).setValue(nF.direction.y).linebreak();
   control.addSlider("noise_z", 0, 100).setLabel("noise z").setMin(-0.1).setMax(0.1).setValue(nF.direction.z).linebreak();
+  control.addToggle("show_noise").setWidth(20).setValue(nFVisible);
   control.end();
   control.setBroadcast(true);
 }
@@ -59,7 +60,9 @@ public void noise_z(float v) {
   nF.direction.z = v;
 }
 
-
+public void show_noise(boolean b) {
+  nFVisible = b;
+}
 
 void resetBlobs() {
   for (int i = 0; i < numBlobs; i ++) {
@@ -72,10 +75,8 @@ void draw() {
 
   nF.update();
 
-//println(nFVisible);
-
   if (nFVisible)
-    nF.draw();
+    nF.drawField();
 
   //stroke(0);
   fill(255);
