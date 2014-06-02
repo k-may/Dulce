@@ -1,16 +1,16 @@
 color[] colors = {
-  color(255, 0, 0), color(0, 255, 0), color(0, 0, 255)
+  color(255, 0, 0), color(49, 255, 164), color(31,62,48), color(0, 0, 255)
 };
 float[] ratios = {
-  0.0, 0.5, 1.0
+  0.0, 0.5, 0.7, 1.0
 };
 color[] colorMap = new color[100];
-int resolution = 5;
+int resolution = 1;
 
 NoiseField nF;
 
 void setup() {
-      size(displayWidth, 600);
+      size(displayWidth, displayHeight);
 
   nF = new NoiseField();
 
@@ -34,6 +34,10 @@ void setup() {
     fill(colorMap[x]);
     rect(x*barWidth, 0, barWidth, 30);
   }
+}
+
+boolean sketchFullScreen(){
+ return true; 
 }
 
 void draw() {
