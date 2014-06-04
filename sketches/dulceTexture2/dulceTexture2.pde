@@ -2,10 +2,10 @@ color[] colors = {
   color(255, 0, 0), color(49, 255, 164), color(31,62,48), color(0, 0, 255)
 };
 float[] ratios = {
-  0.0, 0.5, 0.7, 1.0
+  0.0, 0.4, 0.6, 1.0
 };
 color[] colorMap = new color[100];
-int resolution = 1;
+int resolution = 10;
 
 NoiseField nF;
 
