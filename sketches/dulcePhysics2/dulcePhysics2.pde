@@ -6,10 +6,9 @@ import java.util.*;
 
 VerletPhysics2D physics;
 VerletParticle2D p1;
-int resolution = 4;
 
-float anchorStrength = 0.01;
-float controlStrength = 0.01;
+float anchorStrength = 0.001;
+float controlStrength = 0.001;
 
 VerletParticle2D ctrl;
 
@@ -20,8 +19,8 @@ void setup() {
   smooth();
 
   physics = new VerletPhysics2D();
-  physics.addBehavior(new GravityBehavior(new Vec2D(0, 0.1)));
-  physics.setWorldBounds(new Rect(0, 0, width, height));
+  physics.addBehavior(new GravityBehavior(new Vec2D(0, -0.01)));
+  physics.setWorldBounds(new Rect(0, -50, width, height + 50));
 
 
   shapes = new ArrayList();
@@ -32,19 +31,22 @@ void setup() {
 }
 
 VerletShape2D createShape(VerletParticle2D center) {
-  Segment[] segments = createSegments(center);
-  return new VerletShape2D(center, segments);
+  color col = color(random(200, 240),random(200, 240),random(200, 240));
+  int res = (int)random(3,8);
+  float radius = random(30, 50);
+  Segment[] segments = createSegments(center, radius, res);
+  return new VerletShape2D(center, segments, radius, col);
 }
 
-Segment[] createSegments(VerletParticle2D center) {
+Segment[] createSegments(VerletParticle2D center, float radius, int res) {
 
-  ArrayList<VerletParticle2D> outer =  createOuterParticles(center);
-  Segment[] segments = new Segment[resolution];
+  ArrayList<VerletParticle2D> outer =  createOuterParticles(center, radius, res);
+  Segment[] segments = new Segment[res];
 
   VerletParticle2D start, dest, c1, c2;// = null;
 
   float a1, a2, len, controlLen;
-  float inc = PI/resolution;
+  float inc = PI/res;
 
   ArrayList<VerletParticle2D> cPts = new ArrayList();
 
@@ -68,18 +70,18 @@ Segment[] createSegments(VerletParticle2D center) {
   return segments;
 }
 
-ArrayList<VerletParticle2D> createOuterParticles(VerletParticle2D center) {
+ArrayList<VerletParticle2D> createOuterParticles(VerletParticle2D center,float radius, int res) {
 
   ArrayList<VerletParticle2D> outer = new ArrayList();
 
   //create symmetrical shape
   float x, y;
   float theta, angle, len = -1;
-  int radius = 50;
+
   VerletParticle2D p = null;
   VerletSpring2D spring = null;
-  for (int i = 0; i < resolution; i ++) {
-    theta = (float)i / resolution;
+  for (int i = 0; i < res; i ++) {
+    theta = (float)i / res;
     angle = 2*PI*theta;
 
     x = sin(angle)*radius + center.x;

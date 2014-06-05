@@ -2,10 +2,16 @@ class VerletShape2D {
   Segment[] segs;
   VerletParticle2D p;
   ArrayList<VerletSpring2D> springs;
+  color col;
 
-  VerletShape2D(VerletParticle2D center, Segment[] segs) {
+  boolean drawFrame = false;
+  boolean drawControls = false;
+
+  VerletShape2D(VerletParticle2D center, Segment[] segs, float radius, color col) {
     this.segs = segs;
     this.p = center;
+    this.col = col;
+    physics.addBehavior(new AttractionBehavior(p, radius, -0.5f, 0.01f));
 
     springs = new ArrayList();
 
@@ -30,8 +36,8 @@ class VerletShape2D {
       addSpring(spring);
 
       //tie anchors
-      //spring = new VerletSpring2D(p1, p2, p1.distanceTo(p2), anchorStrength);
-     // addSpring(spring);
+      spring = new VerletSpring2D(p1, p2, p1.distanceTo(p2), anchorStrength);
+      addSpring(spring);
 
       //tie anchors to controls
       spring = new VerletSpring2D(p1, c1, p1.distanceTo(c1), anchorStrength);
@@ -61,7 +67,7 @@ class VerletShape2D {
 
     spring = new VerletSpring2D(prevCtrl, segs[0].c1, prevCtrl.distanceTo(segs[0].c1), anchorStrength);
     addSpring(spring);
-    
+
     println("num springs : " + springs.size());
   }
 
@@ -69,22 +75,29 @@ class VerletShape2D {
     springs.add(spring);
     physics.addSpring(spring);
   }
-  
+
   void draw() {
     noStroke();
+    fill(col);
     beginShape();
     for (int i = 0; i < segs.length; i ++) {
       segs[i].draw();
     }
     endShape();
 
-    for (int i = 0; i < segs.length; i ++) {
-      segs[i].drawParticles();
+    if (drawControls) {
+      noFill();
+      stroke(100);
+      for (int i = 0; i < segs.length; i ++) {
+        segs[i].drawParticles();
+      }
     }
 
-    stroke(200);
-    for (VerletSpring2D s : springs) {
-      line(s.a.x, s.a.y, s.b.x, s.b.y);
+    if (drawFrame) {
+      stroke(200);
+      for (VerletSpring2D s : springs) {
+        line(s.a.x, s.a.y, s.b.x, s.b.y);
+      }
     }
   }
 }
