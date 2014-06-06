@@ -20,6 +20,7 @@ void setup() {
   control.setAutoSpacing();
   control.addSlider("resolution").setPosition(10, 10).setMax(200).setMin(10).setValue(res);
   control.setBroadcast(true);
+  
 }
 
 public void resolution(int value){
@@ -39,6 +40,7 @@ void draw() {
 }
 
 void drawLine() {
+  noFill();
   stroke(100);
   beginShape();
   for (Vec2D p : points) {
