@@ -1,5 +1,8 @@
 # Sketches Summary:
 
+
+The following are brief descriptions of the sketches.
+
 ### dulceFloat1
 
 Just thinking about a floating movement
@@ -26,7 +29,7 @@ Thinking about creating a fluid ps style background. Also using noise
 
 ### dulceTexture2
 
-Similar to the previous, but with multiple colors.
+Similar to the previous, but with multiple colors (would be nice to add a color picker option, and many have the colors change dynamically)
 
 ### dulcePhysics1
 
@@ -43,7 +46,7 @@ The resolution of the lines here are variable (would be nice to add a slider or 
 
 ### dulceEmpathy
 
-Based on a discussion we had concerning creating an empathetic experience, I've implimented a simple blinking eye form based on the joan miro painting. Though it might be a good place to start conceptualizing what we want to see in terms of what is possible emotionally
+Based on a discussion we had concerning creating an empathetic experience, I've implimented a simple blinking eye form based on the joan miro painting. Though it might be a good place to start conceptualizing what we want to see in terms of what is possible emotionally. Note: includes the penner easing library; can be found here : https://github.com/jesusgollonet/processing-penner-easing
 
 
 
