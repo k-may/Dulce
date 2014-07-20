@@ -4,7 +4,7 @@ class ShapeFactory {
 
   float anchorStrength = 0.001;
   float controlStrength = 0.001;
-  int alpha = 150;
+  int alpha = 200;
 
   ShapeFactory(VerletPhysics2D physics, float anchorStrength, float controlStrength) {
     this.physics = physics;
@@ -146,4 +146,3 @@ class ShapeFactory {
     return new VerletParticle2D(v);
   }
 }
-

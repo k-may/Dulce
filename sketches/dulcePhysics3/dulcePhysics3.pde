@@ -15,7 +15,7 @@ boolean mouseDown = false;
 ArrayList<VerletShape2D> shapes;
 
 void setup() {
-  size(800, 800);
+  size(displayWidth, displayHeight);
   smooth();
 
   physics = new VerletPhysics2D();
@@ -29,6 +29,9 @@ void setup() {
   bS = new BezierShape();
 }
 
+boolean sketchFullScreen() {
+  return true;
+}
 
 void draw() {
   background(255);
@@ -94,4 +97,3 @@ void mouseReleased() {
 void mouseExited() {
   mouseDown = false;
 }
-

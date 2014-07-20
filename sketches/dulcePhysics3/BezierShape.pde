@@ -4,7 +4,7 @@ class BezierShape {
   boolean lineComplete;
   ArrayList<Line2D> lines;
   ArrayList<Vec2D> points;
-  int lineRes = 10;
+  int lineRes = 5;
 
   BezierShape() {
     reset();
@@ -120,4 +120,3 @@ class BezierShape {
       line(l.a.x, l.a.y, l.b.x, l.b.y);
   }
 }
-

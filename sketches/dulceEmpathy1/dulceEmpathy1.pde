@@ -11,7 +11,7 @@ PVector right = new PVector(115, 60);
 PVector left = new PVector(0, 50);
 PVector center = new PVector(61, 37);
 
-float openVal = 1.0f;
+float openVal = 0.5f;
 
 int iris = 67;
 int cornea = 42;
@@ -32,11 +32,13 @@ PFont font;
 
 PVector eyePos;
 
+PGraphics g;
+
 void setup() {
   size(300, 300, P2D);
 
   frames = new PImage[100];
-
+  g = createGraphics(w, h, P2D);
   orig = createGraphics(w, h, P2D);//getEye();
   m = createGraphics(w, h, P2D);
   font = createDefaultFont(10);
@@ -50,8 +52,11 @@ void draw() {
 
   PImage e = getEye().get();
   e.mask(getMask());
-  image(e, (width - w)/2, (height - h)/2);
 
+  g.beginDraw();
+  g.image(e, 0, 0);//(width - w)/2, (height - h)/2);
+  g.endDraw();
+  image(e, (width - w)/2, (height - h)/2);
   textFont(font);
   text(frameRate, 10, 10);
 }
@@ -88,13 +93,13 @@ PGraphics getEye() {
 
 PGraphics getMask() {
 
+  println("get " + openVal);
   if (closing) {
     openVal = getRatio();
     if (openVal >= 1.0f) {
       closing = false;
       openVal = 1;
     }
-
   }
 
   PVector tC1 = PVector.lerp(_tC1, _bC1, 1 - openVal);
@@ -134,9 +139,9 @@ float getRatio() {
     r = penner.easing.Quad.easeIn(elapsed, 1, -1, closeTime);
   } else {
     elapsed -= closeTime;
-    r = penner.easing.Quad.easeIn(elapsed, 0, 1, openTime);  
+    r = penner.easing.Quad.easeIn(elapsed, 0, 1, openTime);
   }
-  
+
   return r;
 }
 
@@ -144,4 +149,3 @@ void mousePressed() {
   closing = true;
   pressTime = millis();
 }
-
