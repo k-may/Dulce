@@ -85,9 +85,9 @@ void draw() {
     float mag = nF.getValue(blobs[i].x, blobs[i].y);
 
     float speed = (1- blobs[i].size/blobSize) ;
+    //println(speed);
     //mag *= mag;
     blobs[i].move(speed, mag);
     blobs[i].draw();
   }
 }
-

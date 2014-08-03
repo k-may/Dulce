@@ -1,9 +1,25 @@
+import oscP5.*;
+import netP5.*;
+
 
 import toxi.physics2d.*;
 import toxi.physics2d.behaviors.*;
 import toxi.geom.*;
 import java.util.*;
 
+import java.awt.Rectangle;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
+Rectangle monitor = new Rectangle();
+
+  int colorMin = 0;
+  int colorMax = 255;
+  
+  OSCClient client;
+
+  
 VerletPhysics2D physics;
 VerletParticle2D p1;
 
@@ -15,8 +31,17 @@ VerletParticle2D ctrl;
 ArrayList<VerletShape2D> shapes;
 
 void setup() {
-  size(640, 640);
+  // Get second screen details and save as Rectangle monitor
+  GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+  GraphicsDevice[] gs = ge.getScreenDevices();
+  // gs[1] gets the *second* screen. gs[0] would get the primary screen
+  GraphicsDevice gd = gs[1];
+  GraphicsConfiguration[] gc = gd.getConfigurations();
+  monitor = gc[0].getBounds();
+ size(monitor.width, monitor.height);
+ 
   smooth();
+  client = new OSCClient(this);
 
   physics = new VerletPhysics2D();
   physics.addBehavior(new GravityBehavior(new Vec2D(0, -0.01)));
@@ -30,8 +55,21 @@ void setup() {
   
 }
 
+public void init() {
+  frame.removeNotify();
+  frame.setUndecorated(true);
+  super.init();
+} 
+
+  float rand() {
+    return random(colorMin, colorMax);
+  }
+  int getRandomColor() {
+    return color(rand(), rand(), rand(), 200);
+  }
+
 VerletShape2D createShape(VerletParticle2D center) {
-  color col = color(random(200, 240),random(200, 240),random(200, 240));
+  color col = getRandomColor();//color(random(200, 240),random(200, 240),random(200, 240));
   int res = (int)random(3,8);
   float radius = random(30, 50);
   Segment[] segments = createSegments(center, radius, res);
@@ -104,6 +142,9 @@ VerletParticle2D createControl(VerletParticle2D p, float angle, float len) {
 }
 
 void draw() {
+    frame.setLocation(monitor.x, monitor.y);
+  frame.setAlwaysOnTop(true); 
+  
   background(255);
   physics.update();
 
@@ -113,10 +154,14 @@ void draw() {
   fill(255, 20, 120);
   for (VerletShape2D shape : shapes)
     shape.draw();
+    
+    if(shapes.size() > 20)
+    shapes.remove(0);
 }
 
 void mousePressed(){
   
   VerletParticle2D left = new VerletParticle2D(mouseX,mouseY);
   shapes.add(createShape(left));
+  client.send();
 }
